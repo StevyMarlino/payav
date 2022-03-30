@@ -120,7 +120,7 @@
                     <script>
                         document.write(new Date().getFullYear())
                     </script>
-                    Soft by Creative Tim.
+                    
                 </p>
             </div>
         </div>
