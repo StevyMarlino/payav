@@ -42,19 +42,29 @@ class Register extends Component
     {
         $this->validate();
 
-
+        try {
             User::create([
                 'name' => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
-                'client_id' => uniqid(),
+                'client_id' => strtoupper(uniqid()),
                 'password' => Hash::make($this->password),
             ]);
             $this->notification()->notify([
-                'title'       => 'Profile saved!',
+                'title' => 'Profile saved!',
                 'description' => 'Your profile was successfull saved',
-                'icon'        => 'success'
+                'icon' => 'success'
             ]);
+            $this->reset();
+        } catch (\Exception $error) {
+            $this->notification()->notify([
+                'title' => 'Oops!',
+                'description' => 'Oops, Something Wrong',
+                'icon' => 'error'
+            ]);
+        }
+
+
 
     }
 
