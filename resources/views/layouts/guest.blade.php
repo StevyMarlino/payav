@@ -26,21 +26,18 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-
-    @yield('css')
-
-
     {{--    {--        <!-- Scripts -->--}}
     @livewireStyles
-    <script src="{{ mix('js/app.js') }}" defer></script>
     <wireui:scripts />
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    @yield('css')
 </head>
 <body>
-<x-notifications></x-notifications>
 <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
         <div class="col-12">
+            <x-notifications></x-notifications>
             <!-- Navbar -->
             <nav
                 class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
