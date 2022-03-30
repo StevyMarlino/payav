@@ -19,12 +19,12 @@
 
                                         <label for="email">{{ __('Email') }}</label>
                                         <div class="mb-3">
-                                            <input wire:model="email" aria-label="Email" placeholder="Email" class="form-control" type="email" name="email" autofocus />
+                                            <input wire:model.defer="email" aria-label="Email" placeholder="Email" class="form-control" type="email" name="email" autofocus />
                                         </div>
 
                                         <label for="password">{{ __('Password') }}</label>
                                         <div>
-                                            <input wire:model="password" aria-label="Password" placeholder="Password" class="form-control" type="password" name="password" autocomplete="current-password" />
+                                            <input wire:model.defer="password" aria-label="Password" placeholder="Password" class="form-control" type="password" name="password" autocomplete="current-password" />
                                         </div>
 
                                         <div class="mt-3 form-check form-switch">
