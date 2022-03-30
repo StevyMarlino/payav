@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -17,26 +18,14 @@ class Register extends Component
     public $password;
     public $password_confirmation;
     public $terms;
-    private $client_id;
 
     public $rules = [
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //'user.client_id' => ['required', 'string', 'max:255', 'unique:users'],
         'phone' => ['required', 'string', 'max:255', 'unique:users'],
         'password' => ['required', 'string', 'confirmed'],
         'terms' => ['accepted', 'required']
     ];
-
-    public function mount()
-    {
-        $this->client_id = uniqid();
-    }
-
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
 
     public function save()
     {
@@ -63,9 +52,6 @@ class Register extends Component
                 'icon' => 'error'
             ]);
         }
-
-
-
     }
 
     public function render()
