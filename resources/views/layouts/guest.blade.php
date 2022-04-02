@@ -32,6 +32,26 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     @yield('css')
+    <style type="text/css">
+        .profile-sm {
+            height: 32px;
+            width: 32px;
+        }
+
+        .iti__flag {
+            background-image: url("{{ asset('build/img/flags.png') }}");
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .iti__flag {
+                background-image: url("{{ asset('build/img/flags@2x.png') }}");
+            }
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="container position-sticky z-index-sticky top-0">
@@ -138,6 +158,8 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('assets/js/soft-ui-dashboard.min.js') }}?v=1.0.3"></script>
+<link rel="stylesheet" href="{{ asset('build/css/intlTelInput.min.css') }}">
+
 @livewireScripts
 
 <script src="{{ asset('build/js/intlTelInput.js') }}"></script>
@@ -145,5 +167,55 @@
 @yield('js')
 @wireUiScripts
 <script src="//unpkg.com/alpinejs" defer></script>
+<script>
+    var input = document.querySelector("#phone");
+    errorMsg = document.querySelector("#error-msg");
+    validMsg = document.querySelector("#valid-msg");
+
+    // here, the index maps to the error code returned from getValidationError - see readme
+    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+    // initialise plugin
+    var iti = window.intlTelInput(input, {
+        initialCountry: "auto",
+        hiddenInput: "full_phone",
+        geoIpLookup: function (callback) {
+            $.get('https://ipinfo.io', function () {
+            }, "jsonp").always(function (resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "us";
+                callback(countryCode);
+            });
+        },
+        utilsScript: "{{ asset('build/js/utils.js') }}" // just for formatting/placeholders etc
+    });
+
+    var reset = function () {
+        input.classList.remove("error");
+        errorMsg.innerHTML = "";
+        errorMsg.classList.add("hide");
+        validMsg.classList.add("hide");
+    };
+
+    // on blur: validate
+    input.addEventListener('blur', function () {
+        reset();
+        if (input.value.trim()) {
+            if (iti.isValidNumber()) {
+                validMsg.classList.remove("hide");
+                $('#submit').prop("disabled", false);
+            } else {
+                input.classList.add("error");
+                var errorCode = iti.getValidationError();
+                errorMsg.innerHTML = errorMap[errorCode];
+                errorMsg.classList.remove("hide");
+                $('#submit').prop("disabled", true);
+            }
+        }
+    });
+
+    // on keyup / change flag: reset
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+</script>
 </body>
 </html>

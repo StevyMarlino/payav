@@ -14,10 +14,11 @@
                                 </div>
                                 <div class="card-body pb-3">
                                     {{--                                    <x-errors title="We found {errors} validation error(s)"></x-errors>--}}
-                                    <form wire:submit.prevent="save" role="form">
+                                    <form action="{{ route('register') }}" method="post" role="form">
+                                        @csrf
                                         <label for="name">Name</label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="name" type="text"
+                                            <input name="name" type="text"
                                                    class="form-control  @error('name') is-invalid @enderror"
                                                    placeholder="Name" aria-label="Name">
                                             @error('name') <span
@@ -25,7 +26,7 @@
                                         </div>
                                         <label for="email">Email</label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="email" type="email"
+                                            <input name="email" type="email"
                                                    class="form-control @error('email') is-invalid @enderror "
                                                    placeholder="Email" aria-label="Email">
                                             @error('email') <span
@@ -34,7 +35,7 @@
 
                                         <label for="phone"> Phone </label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="phone" id="phone"
+                                            <input name="phone" id="phone"
                                                    class="form-control @error('phone') is-invalid @enderror "
                                                    type="tel" name="phone"
                                             />
@@ -45,7 +46,7 @@
                                         </div>
                                         <label for="password">Password</label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="password" type="password"
+                                            <input name="password" type="password"
                                                    class="form-control @error('password') is-invalid @enderror "
                                                    placeholder="Password"
                                                    aria-label="Password">
@@ -54,7 +55,7 @@
                                         </div>
                                         <label>Confirm Password</label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="password_confirmation" type="password"
+                                            <input ="password_confirmation" type="password"
                                                    class="form-control @error('password') is-invalid @enderror "
                                                    placeholder="Password"
                                                    aria-label="Password">
@@ -75,7 +76,8 @@
                                                 class="invalid-feedback">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn bg-gradient-primary w-100 mt-4 mb-0">Sign
+                                            <button id="submit" type="submit"
+                                                    class="btn bg-gradient-primary w-100 mt-4 mb-0">Sign
                                                 up
                                             </button>
                                         </div>
@@ -104,71 +106,3 @@
     </main>
 
 </div>
-
-@section('css')
-    <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.min.css') }}">
-    <style type="text/css">
-        .profile-sm {
-            height: 32px;
-            width: 32px;
-        }
-
-        .iti__flag {
-            background-image: url("{{ asset('build/img/flags.png') }}");
-        }
-
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .iti__flag {
-                background-image: url("{{ asset('build/img/flags@2x.png') }}");
-            }
-        }
-
-        .hide {
-            display: none;
-        }
-    </style>
-
-@endsection
-
-@section('js')
-
-    <script>
-        var input = document.querySelector("#phone"),
-            errorMsg = document.querySelector("#error-msg"),
-            validMsg = document.querySelector("#valid-msg");
-
-        // here, the index maps to the error code returned from getValidationError - see readme
-        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
-
-        // initialise plugin
-        var iti = window.intlTelInput(input, {
-            utilsScript: "{{ asset('build/js/utils.js') }}",
-        });
-
-        var reset = function () {
-            input.classList.remove("error");
-            errorMsg.innerHTML = "";
-            errorMsg.classList.add("hide");
-            validMsg.classList.add("hide");
-        };
-
-        // on blur: validate
-        input.addEventListener('blur', function () {
-            reset();
-            if (input.value.trim()) {
-                if (iti.isValidNumber()) {
-                    validMsg.classList.remove("hide");
-                } else {
-                    input.classList.add("error");
-                    var errorCode = iti.getValidationError();
-                    errorMsg.innerHTML = errorMap[errorCode];
-                    errorMsg.classList.remove("hide");
-                }
-            }
-        });
-
-        // on keyup / change flag: reset
-        input.addEventListener('change', reset);
-        input.addEventListener('keyup', reset);
-    </script>
-@endsection

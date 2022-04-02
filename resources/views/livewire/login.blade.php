@@ -14,27 +14,39 @@
                                 </div>
                                 <div class="card-body">
                                     <x-errors title="We found {errors} validation error(s)"></x-errors>
-                                    <form wire:submit.prevent="save" class="text-start">
+                                    <form method="POST" action="{{ route('login') }}" class="text-start">
                                         @csrf
 
                                         <label for="email">{{ __('Email') }}</label>
                                         <div class="mb-3">
-                                            <input wire:model.defer="email" aria-label="Email" placeholder="Email" class="form-control" type="email" name="email" autofocus />
+                                            <input wire:model.defer="email" aria-label="Email" placeholder="Email"
+                                                   class="form-control" type="email" name="email" autofocus/>
                                         </div>
 
                                         <label for="password">{{ __('Password') }}</label>
                                         <div>
-                                            <input wire:model.defer="password" aria-label="Password" placeholder="Password" class="form-control" type="password" name="password" autocomplete="current-password" />
+                                            <input wire:model.defer="password" aria-label="Password"
+                                                   placeholder="Password" class="form-control" type="password"
+                                                   name="password" autocomplete="current-password"/>
                                         </div>
 
                                         <div class="mt-3 form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe" name="remember" checked/>
+                                            <input class="form-check-input" type="checkbox" id="rememberMe"
+                                                   name="remember" checked/>
                                             <label class="form-check-label" for="rememberMe">Remember me</label>
                                         </div>
 
                                         <div class="text-center">
+                                            @if (Route::has('password.request'))
+                                                <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                                                   href="{{ route('password.request') }}">
+                                                    {{ __('Forgot your password?') }}
+                                                </a>
+                                            @endif
 
-                                            <button wire:loading.attr="disabled" type="submit" class="btn bg-gradient-primary w-100 mt-4 mb-0">
+
+                                            <button id="login" type="submit"
+                                                    class="btn bg-gradient-primary w-100 mt-4 mb-0">
                                                 {{ __('Sign in') }}
                                             </button>
 
@@ -44,14 +56,17 @@
                                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
                                         Don't have an account?
-                                        <a href="{{ route('register') }}" class="text-info text-gradient font-weight-bold">Sign up</a>
+                                        <a href="{{ route('register') }}"
+                                           class="text-info text-gradient font-weight-bold">Sign up</a>
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('./assets/img/curved9.jpg')"></div>
+                                <div
+                                    class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
+                                    style="background-image:url('./assets/img/curved9.jpg')"></div>
                             </div>
                         </div>
                     </div>
@@ -60,3 +75,13 @@
         </section>
     </main>
 </div>
+
+@section('js')
+    <script>
+        $('#login').on('click', function () {
+            setTimeout(function () {
+                $('#login').prop("disabled", true);
+            }, 100);
+        })
+    </script>
+@endsection

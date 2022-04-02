@@ -20,7 +20,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input)
     {
-        $input['client_id'] = uniqid();
+        $input['client_id'] = strtoupper(uniqid());
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],

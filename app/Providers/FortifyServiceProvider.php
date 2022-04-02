@@ -38,15 +38,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::authenticateThrough(function (Request $request) {
-            return array_filter([
-                config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-                Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : null,
-                AttemptToAuthenticate::class,
-                PrepareAuthenticatedSession::class,
-            ]);
-        });
-
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

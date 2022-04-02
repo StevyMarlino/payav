@@ -65,6 +65,16 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        <!-- Phone -->
+{{--        <div class="col-span-6 sm:col-span-4">--}}
+{{--            <x-jet-label for="phone" value="{{ __('Phone') }}" />--}}
+{{--            <x-jet-input id="phone" id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" />--}}
+{{--            <x-jet-input-error for="phone" class="mt-2" />--}}
+{{--            <span id="valid-msg" class="hide" style="color:green;">✓ Valid</span>--}}
+{{--            <span id="error-msg" class="hide" style="color:red;"></span>--}}
+
+{{--        </div>--}}
     </x-slot>
 
     <x-slot name="actions">
@@ -72,7 +82,7 @@
             {{ __('Saved.') }}
         </x-jet-action-message>
 
-        <x-jet-button wire:loading.attr="disabled" wire:target="photo">
+        <x-jet-button id="submit" wire:loading.attr="disabled" wire:target="photo">
             {{ __('Save') }}
         </x-jet-button>
     </x-slot>
