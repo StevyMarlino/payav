@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active " href="#">
+                    <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} "  href="#">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                             <i class="fa fa-home" style="font-size: 16px; color:#bcb7b7;"></i>
                         </div>
