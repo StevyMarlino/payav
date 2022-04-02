@@ -56,7 +56,7 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" style="background-color: #f8f9fa;">
         <x-jet-banner></x-jet-banner>
 
         {{-- Side Menu nav component --}}
