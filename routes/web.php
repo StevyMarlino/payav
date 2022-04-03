@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::view('/powergrid', 'powergrid-demo');
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

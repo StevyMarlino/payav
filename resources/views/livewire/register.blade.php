@@ -13,7 +13,6 @@
                                     <p class="mb-0">Enter your email and password to register</p>
                                 </div>
                                 <div class="card-body pb-3">
-                                    {{--                                    <x-errors title="We found {errors} validation error(s)"></x-errors>--}}
                                     <form action="{{ route('register') }}" method="post" role="form">
                                         @csrf
                                         <label for="name">Name</label>
@@ -55,7 +54,7 @@
                                         </div>
                                         <label>Confirm Password</label>
                                         <div class="mb-3">
-                                            <input ="password_confirmation" type="password"
+                                            <input name="password_confirmation" type="password"
                                                    class="form-control @error('password') is-invalid @enderror "
                                                    placeholder="Password"
                                                    aria-label="Password">
@@ -63,9 +62,9 @@
                                                 class="invalid-feedback">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="form-check form-check-info text-left">
-                                            <input wire:model.defer="terms"
+                                            <input name="terms"
                                                    class="form-check-input @error('terms') is-invalid @enderror "
-                                                   type="checkbox" value=""
+                                                   type="checkbox"
                                                    id="flexCheckDefault">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 I agree the <a href="#"
@@ -96,7 +95,7 @@
                             <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
                                 <div
                                     class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                                    style="background-image:url('./assets/img/curved9.jpg')"></div>
+                                    style="background-image:url('{{ asset('assets/img/curved9.jpg') }}')"></div>
                             </div>
                         </div>
                     </div>
