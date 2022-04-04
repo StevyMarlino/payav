@@ -7,10 +7,10 @@
                 <h5 class="text-sm fw-bold text-muted">Pending</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class=" text-muted text-sm">1 Transactions</h3>
+                        <h3 class="text-muted text-sm">{{ $pending }} Transaction{{ ($pending > 1)? 's': '' }}</h3>
                     </div>
                     <div class="col-md-6">
-                        <p class="text-end"><span class="badge bg-primary">1 </span></p>
+                        <p class="text-end"><span class="badge bg-primary">{{ $pending }} </span></p>
                     </div>
                 </div>
 
@@ -22,10 +22,10 @@
                 <h5 class="text-sm fw-bold text-muted">Completed</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class=" text-muted text-sm">2 Transactions</h3>
+                        <h3 class=" text-muted text-sm">{{ $completed }} Transaction{{ ($completed > 1)? 's': '' }}</h3>
                     </div>
                     <div class="col-md-6">
-                        <p class="text-end"><span class="badge bg-primary">770</span></p>
+                        <p class="text-end"><span class="badge bg-primary">{{ $completed }}</span></p>
                     </div>
                 </div>
 

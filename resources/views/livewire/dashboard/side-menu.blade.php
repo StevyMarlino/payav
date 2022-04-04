@@ -9,7 +9,7 @@
             </a>
         </div>
         <hr class="horizontal dark mt-0">
-        <h6 class="text-center">Account ID : {{ auth()->user()->client_id }}</h6>
+        <h6 class="text-center text-muted text-sm">Account ID : {{ auth()->user()->client_id }}</h6>
         <hr class="horizontal dark mt-1">
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <ul class="navbar-nav">

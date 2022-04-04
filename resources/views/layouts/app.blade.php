@@ -14,6 +14,8 @@
         <!-- Nucleo Icons -->
         <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
         <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- Font Awesome Icons -->
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
         <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
@@ -96,10 +98,13 @@
 
         <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="{{ asset('assets/js/soft-ui-dashboard.min.js') }}?v=1.0.3"></script>
+        <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+
 
         @livewireScripts
         @wireUiScripts
         <script src="//unpkg.com/alpinejs" defer></script>
+        @yield('js')
 
     </body>
 </html>
