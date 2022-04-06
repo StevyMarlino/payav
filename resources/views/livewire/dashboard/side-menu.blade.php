@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link  " href="promotions.html">
+                <a class="nav-link {{ request()->routeIs('promotions') ? 'active' : '' }} " href="#">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fa fa-user-plus text-black-50" style="font-size: 16px;"></i>
@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#componentsExamples1" class="nav-link  "
+                <a data-bs-toggle="collapse" href="#componentsExamples1" class="nav-link "
                    aria-controls="componentsExamples1" role="button" aria-expanded="true">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -64,13 +64,13 @@
                 <div class="collapse  " id="componentsExamples1" style="">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
-                            <a class="nav-link " href="paymentsettings.html">
+                            <a class="nav-link {{ request()->routeIs('payments') ? 'active' : '' }} " href="#">
                                 <span class="sidenav-mini-icon"> F </span>
                                 <span class="sidenav-normal"> Payment settings </span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="log.html">
+                            <a class="nav-link " href="#">
                                 <span class="sidenav-mini-icon"> L </span>
                                 <span class="sidenav-normal"> Log </span>
                             </a>

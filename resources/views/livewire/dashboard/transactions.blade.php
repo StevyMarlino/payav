@@ -14,7 +14,8 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Deposits</p>
                                     <h5 class="font-weight-bolder mb-0">
                                         {{ number_format($amountDeposit) }} FCFA
-                                        <span class="text-success text-sm font-weight-bolder">{{ $deposit }} operation{{ $deposit > 1 ? 's' : '' }}</span>
+                                        <span
+                                            class="text-success text-sm font-weight-bolder">{{ $deposit }} operation{{ $deposit > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
@@ -38,7 +39,8 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Withdrawals</p>
                                     <h5 class="font-weight-bolder mb-0">
                                         {{ number_format($amountWithdraw) }} FCFA
-                                        <span class="text-success text-sm font-weight-bolder">{{ $withDraw }} operation{{ $withDraw > 1 ? 's' : '' }}</span>
+                                        <span
+                                            class="text-success text-sm font-weight-bolder">{{ $withDraw }} operation{{ $withDraw > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
@@ -63,7 +65,8 @@
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Exchanges</p>
                                     <h5 class="font-weight-bolder mb-0">
                                         {{ number_format($amountExchange) }} FCFA
-                                        <span class="text-success text-sm font-weight-bolder">{{ $exchange }} operation{{ $exchange > 1 ? 's' : '' }}</span>
+                                        <span
+                                            class="text-success text-sm font-weight-bolder">{{ $exchange }} operation{{ $exchange > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
@@ -130,107 +133,43 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
+                                @foreach($myWithdrawOrDepositTransaction as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $item->type }}</h6>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm align-middle text-secondary mb-0">{{ $item->broker }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm align-middle text-secondary mb-0">{{ $item->account_id }}</p>
+                                        </td>
+                                        <td>
                       <span class="badge badge-dot me-4">
                         <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
+                        <span class="text-dark text-xs">{{ $item->amount }}</span>
                       </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
-                      <span class="badge badge-dot me-4">
-                        <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
-                      </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
-                      <span class="badge badge-dot me-4">
-                        <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
-                      </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
-
-
+                                        </td>
+                                        <td class="align-left text-start text-sm">
+                                            <p class="text-secondary mb-0 text-sm">{{ $item->transaction_id }}</p>
+                                        </td>
+                                        <td class="align-middle text-start">
+                                            <span class="text-secondary text-sm">{{ $item->wallet }}</span>
+                                        </td>
+                                        <td class="align-middle text-start">
+                                            <span
+                                                class="text-secondary text-sm">{{ $item->created_at->format('d/m/Y') }}</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span
+                                                class="text-secondary text-sm  {{ $item->status ? 'text-success' : 'text-warning' }}">{{ $item->status ? 'Completed' : 'Pending' }}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach()
                                 </tbody>
                             </table>
                         </div>
@@ -273,107 +212,44 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
+                                @foreach($myExchangeTransaction as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $item->type }}</h6>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm align-middle text-secondary mb-0">{{ $item->brocker }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm align-middle text-secondary mb-0">{{ $item->account_id }}</p>
+                                        </td>
+                                        <td>
                       <span class="badge badge-dot me-4">
                         <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
+                        <span class="text-dark text-xs">{{ number_format($item->amount) }}</span>
                       </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
-                      <span class="badge badge-dot me-4">
-                        <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
-                      </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Deposit</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">Deriv</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm align-middle text-secondary mb-0">CR12345</p>
-                                    </td>
-                                    <td>
-                      <span class="badge badge-dot me-4">
-                        <i class="bg-info"></i>
-                        <span class="text-dark text-xs">20$</span>
-                      </span>
-                                    </td>
-                                    <td class="align-left text-start text-sm">
-                                        <p class="text-secondary mb-0 text-sm">PT123456</p>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">MTN Momo</span>
-                                    </td>
-                                    <td class="align-middle text-start">
-                                        <span class="text-secondary text-sm">25/03/2022</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm">Pending</span>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="align-left text-start text-sm">
+                                            <p class="text-secondary mb-0 text-sm">{{ $item->transaction_id }}</p>
+                                        </td>
+                                        <td class="align-middle text-start">
+                                            <span class="text-secondary text-sm">{{ $item->wallet }}</span>
+                                        </td>
+                                        <td class="align-middle text-start">
+                                            <span
+                                                class="text-secondary text-sm">{{ $item->created_at->format('d/m/Y')}}</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span
+                                                class="text-secondary text-sm  {{ $item->status ? 'text-success' : 'text-warning' }}">{{ $item->status ? 'Completed' : 'Pending' }}</span>
 
-
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
