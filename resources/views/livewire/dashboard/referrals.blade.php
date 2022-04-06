@@ -38,7 +38,7 @@
                                         <div class="card card-plain text-center">
                                             <div class="card-body">
                                                 <div class="icon icon-shape bg-primary shadow text-center border-radius-md mb-2">
-                                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                                    <i class="fa fa-download mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                                 </div>
                                                 <p class="text-sm font-weight-bold mb-2">1. copy the download link </p>
                                             </div>
@@ -48,7 +48,7 @@
                                         <div class="card card-plain text-center">
                                             <div class="card-body">
                                                 <div class="icon icon-shape bg-primary shadow text-center border-radius-md mb-2">
-                                                    <i class="ni ni-send text-lg opacity-10" aria-hidden="true"></i>
+                                                    <i class="fa fa-send mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                                 </div>
                                                 <p class="text-sm font-weight-bold mb-2">2. Share with a friend to user when signing up</p>
                                             </div>
@@ -58,7 +58,7 @@
                                         <div class="card card-plain text-center">
                                             <div class="card-body">
                                                 <div class="icon icon-shape bg-primary shadow text-center border-radius-md mb-2">
-                                                    <i class="ni ni-spaceship text-lg opacity-10" aria-hidden="true"></i>
+                                                    <i class="fa fa-space-shuttle mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                                 </div>
                                                 <p class="text-sm font-weight-bold mb-2">3. Gain up to </p>
                                                 <h5 class="font-weight-bolder">2%</h5>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table id="myTable" class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User</th>
@@ -140,25 +140,10 @@
                             </table>
 
                         </div>
-                        <nav aria-label="Page navigation example" class="p-2 pt-3">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
     </div>
 
 </div>

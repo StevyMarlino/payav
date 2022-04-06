@@ -13,14 +13,14 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Deposits</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        53,000 FCFA
-                                        <span class="text-success text-sm font-weight-bolder">23 operations</span>
+                                        {{ number_format($amountDeposit) }} FCFA
+                                        <span class="text-success text-sm font-weight-bolder">{{ $deposit }} operation{{ $deposit > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa fa-money-bill mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -37,14 +37,14 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Withdrawals</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        53,000 FCFA
-                                        <span class="text-success text-sm font-weight-bolder">23 operations</span>
+                                        {{ number_format($amountWithdraw) }} FCFA
+                                        <span class="text-success text-sm font-weight-bolder">{{ $withDraw }} operation{{ $withDraw > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa fa-coins mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -62,14 +62,14 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Exchanges</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        53,000 FCFA
-                                        <span class="text-success text-sm font-weight-bolder">23 operations</span>
+                                        {{ number_format($amountExchange) }} FCFA
+                                        <span class="text-success text-sm font-weight-bolder">{{ $exchange }} operation{{ $exchange > 1 ? 's' : '' }}</span>
                                     </h5>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa fa-exchange-alt mt-1 text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>

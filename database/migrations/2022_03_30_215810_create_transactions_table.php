@@ -15,8 +15,11 @@ return new class extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('transaction_id');
+            $table->string('account_id');
             $table->integer('amount');
-            $table->enum('type', ['EXCHANGE', 'DEPOSIT']);
+            $table->enum('type', ['EXCHANGE', 'DEPOSIT','WITHDRAW']);
+            $table->enum('wallet', ['MOMO', 'OM']);
+            $table->enum('broker', ['DERIV', 'FOREX']);
             $table->boolean('status')->default(0);
 
             $table->unsignedBigInteger('user_id');

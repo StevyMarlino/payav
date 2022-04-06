@@ -36,4 +36,46 @@ class Transaction extends Model
             ->where('user_id',auth()->id())
             ->count();
     }
+
+    public static function countExchange()
+    {
+        return Transaction::where('type','EXCHANGE')
+            ->where('user_id',auth()->id())
+            ->count();
+    }
+
+    public static function countDeposit()
+    {
+        return Transaction::where('type','DEPOSIT')
+            ->where('user_id',auth()->id())
+            ->count();
+    }
+
+    public static function countWithdraw()
+    {
+        return Transaction::where('type','WITHDRAW')
+            ->where('user_id',auth()->id())
+            ->count();
+    }
+
+    public static function amountWithdrawTotal()
+    {
+        return Transaction::where('type','WITHDRAW')
+            ->where('user_id',auth()->id())
+            ->sum('amount');
+    }
+
+    public static function amountDepositTotal()
+    {
+        return Transaction::where('type','DEPOSIT')
+            ->where('user_id',auth()->id())
+            ->sum('amount');
+    }
+
+    public static function amountExchangeTotal()
+    {
+        return Transaction::where('type','EXCHANGE')
+            ->where('user_id',auth()->id())
+            ->sum('amount');
+    }
 }
