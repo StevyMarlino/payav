@@ -2,11 +2,9 @@
 
 <div class="row">
     <div class="col-md-2">
-        <livewire:dashboard.side-menu />
     </div>
 <div class="col-md-10">
     <main class="main-content  h-100 mt-1 border-radius-lg ">
-        <!-- End Navbar -->
         <div class="container-fluid py-4">
             <h5 class="fw-bolder">Welcome {{ auth()->user()->name }}</h5>
 

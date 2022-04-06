@@ -34,7 +34,6 @@
                                         <td><span
                                                 class="badge badge-light-success {{ ($transaction->status) ? 'text-success' : 'text-warning' }}">{{ ($transaction->status) ? 'COMPLETED' : 'PENDING' }}</span>
                                         </td>
-
                                     </tr>
                                 @endforeach
                                 </tbody>
