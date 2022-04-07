@@ -48,7 +48,5 @@
             <!-- deposit and withdraw -->
 
         </div>
-
-
     </div>
 @endsection

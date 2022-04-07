@@ -24,7 +24,7 @@
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css') }}" rel="stylesheet"/>
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     {{--    {--        <!-- Scripts -->--}}
     @livewireStyles
@@ -182,7 +182,7 @@
         geoIpLookup: function (callback) {
             $.get('https://ipinfo.io', function () {
             }, "jsonp").always(function (resp) {
-                var countryCode = (resp && resp.country) ? resp.country : "us";
+                var countryCode = (resp && resp.country) ? resp.country : "cm";
                 callback(countryCode);
             });
         },
@@ -217,5 +217,42 @@
     input.addEventListener('change', reset);
     input.addEventListener('keyup', reset);
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCE0i8_6hlYvpNt1uAcJg-f60yX8oDOq0I",
+        authDomain: "payav-409fb.firebaseapp.com",
+        projectId: "payav-409fb",
+        storageBucket: "payav-409fb.appspot.com",
+        messagingSenderId: "821216723961",
+        appId: "1:821216723961:web:6ee6e6c5a32defd8e77328",
+        measurementId: "G-C8P7FKFP4B"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+        'size': 'invisible',
+        'callback': (response) => {
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+
+        }
+    });
+
+</script>
+
 </body>
 </html>

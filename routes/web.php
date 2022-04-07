@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Dashboard\DepositOrWithdraw;
 use App\Http\Livewire\Dashboard\Referrals;
 use App\Http\Livewire\Dashboard\Transactions;
+use App\Http\Livewire\ResetPassword;
 use Illuminate\Support\Facades\Route;
 
 /*
