@@ -24,8 +24,6 @@
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css') }}" rel="stylesheet"/>
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     {{--    {--        <!-- Scripts -->--}}
     @livewireStyles
     <wireui:scripts />
@@ -157,9 +155,15 @@
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="{{ asset('assets/js/soft-ui-dashboard.min.js') }}?v=1.0.3"></script>
+<script src="{{ asset('assets/js/soft-ui-dashboard.min.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.min.css') }}">
-
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 @livewireScripts
 
 <script src="{{ asset('build/js/intlTelInput.js') }}"></script>
@@ -218,41 +222,9 @@
     input.addEventListener('keyup', reset);
 </script>
 
-<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js"></script>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyCE0i8_6hlYvpNt1uAcJg-f60yX8oDOq0I",
-        authDomain: "payav-409fb.firebaseapp.com",
-        projectId: "payav-409fb",
-        storageBucket: "payav-409fb.appspot.com",
-        messagingSenderId: "821216723961",
-        appId: "1:821216723961:web:6ee6e6c5a32defd8e77328",
-        measurementId: "G-C8P7FKFP4B"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-        'size': 'invisible',
-        'callback': (response) => {
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-
-        }
-    });
-
-</script>
+{{--<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js"></script>--}}
 
 </body>
 </html>

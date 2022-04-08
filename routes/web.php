@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\resetController;
 use App\Http\Livewire\Dashboard\DepositOrWithdraw;
 use App\Http\Livewire\Dashboard\Referrals;
 use App\Http\Livewire\Dashboard\Transactions;
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::post('/check',[resetController::class,'check'])->name('check');
+Route::get('/code-otp/{phone}',[resetController::class,'getOtp'])->name('verify.otp');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::prefix('dashboard')->group(function () {

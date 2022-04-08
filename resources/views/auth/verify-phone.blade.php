@@ -1,6 +1,4 @@
-<div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-
+<x-guest-layout>
     <main class="main-content main-content-bg mt-0">
         <section>
             <div class="page-header min-vh-75">
@@ -9,24 +7,20 @@
                         <div class="col-xl-5 col-lg-6 col-md-8 col-12 px-5 d-flex flex-column">
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left">
-                                    <h3 class="text-info text-gradient">Reset Password</h3>
+                                    <h3 class="text-info text-gradient">Code Verification</h3>
                                 </div>
                                 <div class="card-body pb-3">
-                                    <x-errors></x-errors>
-                                    <form action="{{ route('check') }}" method="post">
+                                    <form id="code">
                                         @csrf
-                                        <label>Phone number</label>
+                                        <label>Enter code</label>
                                         <div class="mb-3">
-                                            <input id="phone" type="tel"
-                                                   class="form-control @error('phone') is-invalid @enderror"
-                                                   name="phone" placeholder="Enter Phone number">
-                                            <span id="valid-msg" class="hide" style="color:green;">✓ Valid</span>
-                                            <span id="error-msg" class="hide" style="color:red;"></span>
-                                            @error('phone') <span
-                                                class="invalid-feedback">{{ $message }}</span> @enderror
+                                            <input id="code" type="text"
+                                                   class="form-control"
+                                                   maxlength="6"
+                                                   name="code" placeholder="Enter 6 Digits ">
                                         </div>
                                         <div class="">
-                                            <button id="submit" type="submit" class="btn bg-gradient-primary">Proceed
+                                            <button id="submit" type="submit" class="btn bg-gradient-primary">Verify
                                             </button>
                                         </div>
                                     </form>
@@ -45,9 +39,9 @@
             </div>
         </section>
     </main>
-</div>
 
 @section('js')
+
     <script>
         $('#submit').on('click', function () {
             setTimeout(function () {
@@ -55,4 +49,17 @@
             }, 100);
         })
     </script>
+
+    <script>
+        import { RecaptchaVerifier } from "firebase/auth";
+
+        window.recaptchaVerifier = new RecaptchaVerifier('submit',{
+            'size': 'invisible',
+            'callback': (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+
+            }
+        });
+    </script>
 @endsection
+</x-guest-layout>
