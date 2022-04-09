@@ -17,6 +17,7 @@
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
     <!-- Font Awesome Icons -->
+    <link href="{{ asset('css/my.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
     <!-- CSS Files -->
@@ -55,7 +56,6 @@
 <div class="container position-sticky z-index-sticky top-0">
     <div class="row">
         <div class="col-12">
-            <x-notifications></x-notifications>
             <!-- Navbar -->
             <nav
                 class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
@@ -82,7 +82,9 @@
                 </div>
             </nav>
             <!-- End Navbar -->
+            <x-notifications></x-notifications>
         </div>
+
     </div>
 </div>
 <div class="font-sans text-gray-900 antialiased">
@@ -180,6 +182,7 @@
             sendOTP();
         }
     };
+
     function render() {
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible',
@@ -197,6 +200,7 @@
             window.recaptchaWidgetId = widgetId;
         });
     }
+
     function sendOTP() {
         const phoneNumber = $("#exist_phone").val();
         console.log(phoneNumber)
@@ -215,10 +219,11 @@
         });
     }
 
-    $('#code').submit(function(e) {
+    $('#code').submit(function (e) {
         e.preventDefault();
         verify();
     })
+
     function verify() {
         const code = $('#codes').val();
 
@@ -237,6 +242,7 @@
     }
 </script>
 <!--   Core JS Files   -->
+<script src="{{ asset('js/my.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>

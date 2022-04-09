@@ -13,6 +13,12 @@
                                     <p class="mb-0">Enter your email and password to sign in</p>
                                 </div>
                                 <div class="card-body">
+                                    @if (session()->has('status'))
+                                        <div class="alert alert-green">
+                                            <span class="alert-close" data-close="alert" title="Close">&times;</span>
+                                            <strong>Success</strong> - {{ session('status') }}
+                                        </div>
+                                    @endif
                                     <x-errors title="We found {errors} validation error(s)"></x-errors>
                                     <form method="POST" action="{{ route('login') }}" class="text-start">
                                         @csrf

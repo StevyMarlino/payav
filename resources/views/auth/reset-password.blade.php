@@ -11,7 +11,7 @@
                                     <h3 class="text-info text-gradient">Reset Password</h3>
                                 </div>
                                 <div class="card-body pb-3">
-                                    <x-jet-validation-errors class="mb-4" />
+                                    <x-errors title="We found {errors} validation error(s)"></x-errors>
 
                                     <form method="POST" action="{{ route('update.password') }}">
                                         @csrf

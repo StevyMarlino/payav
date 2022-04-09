@@ -39,7 +39,7 @@ class resetController extends Controller
         User::where('phone', session('phone'))
             ->update(['password' => Hash::make($request->password)]);
 
-
-        return redirect()->route('login')->with('status', __('Password updated'));
+        session()->forget(['verify','phone']);
+        return redirect()->route('login')->with('status', __('Password successfully updated'));
     }
 }
