@@ -24,7 +24,8 @@ Route::get('/', function () {
 });
 
 Route::post('/check',[resetController::class,'check'])->name('check');
-Route::get('/code-otp/{phone}',[resetController::class,'getOtp'])->name('verify.otp');
+Route::get('/password-reset/',[resetController::class,'resetPass'])->name('reset.password');
+Route::post('/password-updated/',[resetController::class,'updatePassword'])->name('update.password');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::prefix('dashboard')->group(function () {

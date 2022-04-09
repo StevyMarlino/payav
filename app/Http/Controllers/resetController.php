@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class resetController extends Controller
 {
@@ -21,8 +22,24 @@ class resetController extends Controller
        return redirect()->route('password.request');
     }
 
-    public function getOtp($phone)
+    public function resetPass()
     {
-        return view('auth.verify-phone',['phone' => $phone]);
+        return view('auth.reset-password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+
+        $request->validate([
+            'phone' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+
+        User::where('phone', session('phone'))
+            ->update(['password' => Hash::make($request->password)]);
+
+
+        return redirect()->route('login')->with('status', __('Password updated'));
     }
 }

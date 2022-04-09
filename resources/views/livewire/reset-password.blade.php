@@ -8,14 +8,15 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-6 col-md-8 col-12 px-5 d-flex flex-column">
                             <div class="card card-plain mt-8">
-                                <div class="card-header pb-0 text-left">
-                                    <h3 class="text-info text-gradient">Reset Password</h3>
+                                <div class="card-header pb-0 text-left" x-data="{ display: {{ (session('verify'))? 'false' : 'true' }} }">
+                                    <h3 x-show="display" class="text-info text-gradient">Reset Password</h3>
+                                    <h3 x-show="!display" class="text-info text-gradient">Code verification</h3>
                                 </div>
 
                                 <div class="card-body pb-3"
                                      x-data="{ showPanel: {{ (session('verify'))? 'false' : 'true' }} }">
                                     <x-errors></x-errors>
-                                    <form action="{{ route('check') }}" method="post" x-show="showPanel ">
+                                    <form action="{{ route('check') }}" method="post" x-show="showPanel">
                                         @csrf
                                         <label>Phone number</label>
                                         <div class="mb-3">

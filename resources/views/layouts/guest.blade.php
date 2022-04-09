@@ -225,6 +225,8 @@
         var credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
         firebase.auth().signInWithCredential(credential).then((result) => {
             console.log('number verify')
+
+            location.href = "{{ route('reset.password') }}"
         }).catch((error) => {
             // Error; SMS not sent
             // ...
