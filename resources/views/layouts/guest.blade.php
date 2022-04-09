@@ -179,6 +179,7 @@
     window.onload = function () {
         render();
         if ($("#exist_phone")[0]) {
+            $('#submit-code').prop("disabled", true);
             sendOTP();
         }
     };
@@ -203,14 +204,14 @@
 
     function sendOTP() {
         const phoneNumber = $("#exist_phone").val();
-        console.log(phoneNumber)
         const appVerifier = window.recaptchaVerifier;
         firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
             .then((confirmationResult) => {
                 // SMS sent. Prompt user to type the code from the message, then sign the
                 // user in with confirmationResult.confirm(code).
                 window.confirmationResult = confirmationResult;
-
+                $('#submit-code').prop("disabled", false);
+                $("#success").show();
                 console.log('Message send');
                 // ...
             }).catch((error) => {
@@ -221,6 +222,7 @@
 
     $('#code').submit(function (e) {
         e.preventDefault();
+        $('#submit-code').prop("disabled", true);
         verify();
     })
 

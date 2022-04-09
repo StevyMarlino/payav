@@ -15,6 +15,10 @@
 
                                 <div class="card-body pb-3"
                                      x-data="{ showPanel: {{ (session('verify'))? 'false' : 'true' }} }">
+                                    <div id="success" class="alert alert-teal" style="display: none;">
+                                        <span class="alert-close" data-close="alert" title="Close">&times;</span>
+                                        <strong>Info</strong> - Check you phone and enter the 6 digits numbers receive.
+                                    </div>
                                     <x-errors></x-errors>
                                     <form action="{{ route('check') }}" method="post" x-show="showPanel">
                                         @csrf
@@ -44,10 +48,10 @@
                                             <input id="codes" type="text"
                                                    class="form-control"
                                                    maxlength="6"
-                                                   name="code" placeholder="Enter 6 Digits ">
+                                                   name="code" placeholder="Enter 6 Digits numbers ">
                                         </div>
                                         <div class="">
-                                            <button id="submit" type="submit"
+                                            <button id="submit-code" type="submit"
                                                     class="btn bg-gradient-primary">Verify
                                             </button>
                                         </div>

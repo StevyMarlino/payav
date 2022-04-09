@@ -30,7 +30,7 @@
                                         </div>
 
                                         <div class="flex items-center justify-end mt-4">
-                                            <x-jet-button class="btn bg-gradient-primary w-100 mt-4 mb-0">
+                                            <x-jet-button id="submit" class="btn bg-gradient-primary w-100 mt-4 mb-0">
                                                 {{ __('Reset Password') }}
                                             </x-jet-button>
                                         </div>
@@ -50,6 +50,16 @@
             </div>
         </section>
     </main>
+    @section('js')
+        <script>
+            $('#submit').on('click', function (e) {
+                // e.preventDefault();
+                setTimeout(function () {
+                    $('#submit').prop("disabled", true);
+                }, 100);
+            })
+        </script>
 
+    @endsection
 
 </x-guest-layout>
