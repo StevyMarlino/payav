@@ -50,16 +50,5 @@
         })
     </script>
 
-    <script>
-        import { RecaptchaVerifier } from "firebase/auth";
-
-        window.recaptchaVerifier = new RecaptchaVerifier('submit',{
-            'size': 'invisible',
-            'callback': (response) => {
-                // reCAPTCHA solved, allow signInWithPhoneNumber.
-
-            }
-        });
-    </script>
 @endsection
 </x-guest-layout>

@@ -26,7 +26,7 @@
 
     {{--    {--        <!-- Scripts -->--}}
     @livewireStyles
-    <wireui:scripts />
+    <wireui:scripts/>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     @yield('css')
@@ -145,6 +145,95 @@
     </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+
+<script>
+    // // Import the functions you need from the SDKs you need
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js";
+    // // TODO: Add SDKs for Firebase products that you want to use
+    // // https://firebase.google.com/docs/web/setup#available-libraries
+    //
+    // // Your web app's Firebase configuration
+    // // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCE0i8_6hlYvpNt1uAcJg-f60yX8oDOq0I",
+        authDomain: "localhost",
+        projectId: "payav-409fb",
+        storageBucket: "payav-409fb.appspot.com",
+        messagingSenderId: "821216723961",
+        appId: "1:821216723961:web:bf8f5ae4e865c1b8e77328",
+        measurementId: "G-TPVKWHC4RG"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // const analytics = getAnalytics(app);
+</script>
+
+<script type="text/javascript">
+    window.onload = function () {
+        render();
+        if ($("#exist_phone")[0]) {
+            sendOTP();
+        }
+    };
+    function render() {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            'size': 'invisible',
+            'callback': (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                // ...
+
+            },
+            'expired-callback': () => {
+                // Response expired. Ask user to solve reCAPTCHA again.
+                // ...
+            }
+        });
+        recaptchaVerifier.render().then((widgetId) => {
+            window.recaptchaWidgetId = widgetId;
+        });
+    }
+    function sendOTP() {
+        const phoneNumber = $("#exist_phone").val();
+        console.log(phoneNumber)
+        const appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                window.confirmationResult = confirmationResult;
+
+                console.log('Message send');
+                // ...
+            }).catch((error) => {
+            // Error; SMS not sent
+            // ...
+        });
+    }
+
+    $('#code').submit(function(e) {
+        e.preventDefault();
+        verify();
+    })
+    function verify() {
+        const code = $('#codes').val();
+
+        var credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
+        firebase.auth().signInWithCredential(credential).then((result) => {
+            console.log('number verify')
+        }).catch((error) => {
+            // Error; SMS not sent
+            // ...
+
+            console.log('SMS not sent')
+        });
+
+    }
+</script>
 <!--   Core JS Files   -->
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
@@ -221,10 +310,6 @@
     input.addEventListener('change', reset);
     input.addEventListener('keyup', reset);
 </script>
-
-{{--<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>--}}
-{{--<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>--}}
-{{--<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js"></script>--}}
 
 </body>
 </html>

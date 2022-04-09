@@ -11,9 +11,11 @@
                                 <div class="card-header pb-0 text-left">
                                     <h3 class="text-info text-gradient">Reset Password</h3>
                                 </div>
-                                <div class="card-body pb-3">
+
+                                <div class="card-body pb-3"
+                                     x-data="{ showPanel: {{ (session('verify'))? 'false' : 'true' }} }">
                                     <x-errors></x-errors>
-                                    <form action="{{ route('check') }}" method="post">
+                                    <form action="{{ route('check') }}" method="post" x-show="showPanel ">
                                         @csrf
                                         <label>Phone number</label>
                                         <div class="mb-3">
@@ -24,9 +26,28 @@
                                             <span id="error-msg" class="hide" style="color:red;"></span>
                                             @error('phone') <span
                                                 class="invalid-feedback">{{ $message }}</span> @enderror
+                                            <div id="recaptcha-container"></div>
+                                            <input type="hidden" @if(session('phone'))id="exist_phone"
+                                                   @endif value="@if(session('phone')){{ session('phone') }} @endif">
                                         </div>
                                         <div class="">
                                             <button id="submit" type="submit" class="btn bg-gradient-primary">Proceed
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <form id="code" x-show="!showPanel">
+                                        @csrf
+                                        <label>Enter code</label>
+                                        <div class="mb-3">
+                                            <input id="codes" type="text"
+                                                   class="form-control"
+                                                   maxlength="6"
+                                                   name="code" placeholder="Enter 6 Digits ">
+                                        </div>
+                                        <div class="">
+                                            <button id="submit" type="submit"
+                                                    class="btn bg-gradient-primary">Verify
                                             </button>
                                         </div>
                                     </form>
@@ -49,10 +70,12 @@
 
 @section('js')
     <script>
-        $('#submit').on('click', function () {
+        $('#submit').on('click', function (e) {
+            // e.preventDefault();
             setTimeout(function () {
                 $('#submit').prop("disabled", true);
             }, 100);
         })
     </script>
+
 @endsection

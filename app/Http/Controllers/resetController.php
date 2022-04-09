@@ -16,7 +16,9 @@ class resetController extends Controller
            return redirect()->back()->withErrors('User with the phone number not found ' );
        }
 
-       return redirect()->route('verify.otp',$request['full_phone']);
+       session()->put('verify','yes');
+       session()->put('phone',$request['full_phone']);
+       return redirect()->route('password.request');
     }
 
     public function getOtp($phone)
