@@ -228,10 +228,10 @@
                                             <p class="text-sm align-middle text-secondary mb-0">{{ $item->account_id }}</p>
                                         </td>
                                         <td>
-                      <span class="badge badge-dot me-4">
-                        <i class="bg-info"></i>
-                        <span class="text-dark text-xs">{{ number_format($item->amount) }}</span>
-                      </span>
+                                          <span class="badge badge-dot me-4">
+                                            <i class="bg-info"></i>
+                                            <span class="text-dark text-xs">{{ number_format($item->amount) }}</span>
+                                          </span>
                                         </td>
                                         <td class="align-left text-start text-sm">
                                             <p class="text-secondary mb-0 text-sm">{{ $item->transaction_id }}</p>

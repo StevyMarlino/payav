@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\resetController;
 use App\Http\Livewire\Dashboard\DepositOrWithdraw;
+use App\Http\Livewire\Dashboard\Promotions;
 use App\Http\Livewire\Dashboard\Referrals;
 use App\Http\Livewire\Dashboard\Transactions;
 use App\Http\Livewire\Dashboard\Exchange;
@@ -34,5 +35,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/referrals', Referrals::class)->name('referrals');
         Route::get('/deposit-or-withdraw', DepositOrWithdraw::class)->name('depositOrWithdraw');
         Route::get('/exchange', Exchange::class)->name('exchange');
+        Route::get('/promotions', Promotions::class)->name('promotions');
     });
 });
