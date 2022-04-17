@@ -76,10 +76,6 @@
                 </div>
             </div>
             <!-- deposit and withdraw -->
-
-
         </div>
-
-
     </div>
 </div>

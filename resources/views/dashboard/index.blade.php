@@ -41,7 +41,7 @@
                                 <p class="mt-2">Exchange Skrill to CFA and Vice-versa</p>
                             </div>
                         </div>
-                        <a href="{{ route('depositOrWithdraw') }}" class="btn btn-primary float-end">Get started</a>
+                        <a href="{{ route('exchange') }}" class="btn btn-primary float-end">Get started</a>
                     </div>
                 </div>
             </div>
