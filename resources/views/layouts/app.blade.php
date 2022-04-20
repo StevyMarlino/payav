@@ -21,6 +21,7 @@
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet"/>
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link href="{{ asset('css/my.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/chartist.min.css') }}" rel="stylesheet"/>
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.min.css') }}">

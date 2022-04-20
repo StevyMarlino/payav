@@ -8,9 +8,12 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-6 col-md-8 col-12 px-5 d-flex flex-column">
                             <div class="card card-plain mt-8">
-                                <div class="card-header pb-0 text-left" x-data="{ display: {{ (session('verify'))? 'false' : 'true' }} }">
-                                    <h3 x-show="display" class="text-info text-gradient">Please Verify Your Phone number</h3>
-                                    <h3 x-show="!display" class="text-info text-gradient">Enter Code verification Receive by sms</h3>
+                                <div class="card-header pb-0 text-left"
+                                     x-data="{ display: {{ (session('google_phone_verify'))? 'false' : 'true' }} }">
+                                    <h3 x-show="display" class="text-info text-gradient">Please Verify Your Phone
+                                        number</h3>
+                                    <h3 x-show="!display" class="text-info text-gradient">Enter Code verification
+                                        Receive by sms</h3>
                                 </div>
 
                                 <div class="card-body pb-3"
@@ -32,8 +35,8 @@
                                             @error('phone') <span
                                                 class="invalid-feedback">{{ $message }}</span> @enderror
                                             <div id="recaptcha-container"></div>
-                                            <input type="hidden" @if(session('phone'))id="exist_phone"
-                                                   @endif value="@if(session('phone')){{ session('phone') }} @endif">
+                                            <input type="hidden" @if(session('phone_google'))id="exist_phone"
+                                                   @endif value="@if(session('phone_google')){{ session('phone_google') }} @endif">
                                         </div>
                                         <div class="">
                                             <button id="submit" type="submit" class="btn bg-gradient-primary">Proceed
