@@ -169,7 +169,7 @@
         firebase.auth().signInWithCredential(credential).then((result) => {
             console.log('number verify')
 
-            location.href = "{{ route('reset.password') }}"
+            location.href = "{{ route('dashboard') }}"
         }).catch((error) => {
             // Error; SMS not sent
             // ...
