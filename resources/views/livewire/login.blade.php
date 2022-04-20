@@ -22,6 +22,10 @@
                                     <x-errors title="We found {errors} validation error(s)"></x-errors>
                                     <form method="POST" action="{{ route('login') }}" class="text-start">
                                         @csrf
+                                        <a id="social" href="{{ route('sign-google') }}" class="btn btn-info w-100 mb-3"><span><i class="fab fa-google"></i></span> &nbsp &nbsp Login with Google</a>
+                                        <hr class="dropdown-divider">
+                                        <p class="mb-0 text-sm text-center mb-3">Or enter your email and password to login</p>
+
 
                                         <label for="email">{{ __('Email') }}</label>
                                         <div class="mb-3">
@@ -87,6 +91,12 @@
         $('#login').on('click', function () {
             setTimeout(function () {
                 $('#login').prop("disabled", true);
+            }, 100);
+        })
+
+        $('#social').on('click', function () {
+            setTimeout(function () {
+                $('#social').prop("disabled", true);
             }, 100);
         })
     </script>

@@ -42,4 +42,5 @@ class resetController extends Controller
         session()->forget(['verify','phone']);
         return redirect()->route('login')->with('status', __('Password successfully updated'));
     }
+
 }

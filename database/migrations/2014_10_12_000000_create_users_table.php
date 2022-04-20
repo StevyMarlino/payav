@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('phone')->unique()->nullable();
             $table->boolean('terms')->default(1);
             $table->string('client_id')->unique();
             $table->timestamp('email_verified_at')->nullable();
