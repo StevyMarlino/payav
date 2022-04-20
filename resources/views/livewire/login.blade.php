@@ -20,9 +20,18 @@
                                         </div>
                                     @endif
                                     <x-errors title="We found {errors} validation error(s)"></x-errors>
+                                    <a href="{{ route('sign-google') }}">
+                                        <button id="social" class="btn btn-info w-100 mb-3 mt-3">
+                                            <span><i class="fab fa-google"></i></span>
+                                            &nbsp &nbsp Login with Google
+                                        </button>
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <p class="mb-0 text-sm text-center mb-3">Or enter your email and password to
+                                        login</p>
+
                                     <form method="POST" action="{{ route('login') }}" class="text-start">
                                         @csrf
-
                                         <label for="email">{{ __('Email') }}</label>
                                         <div class="mb-3">
                                             <input wire:model.defer="email" aria-label="Email" placeholder="Email"
@@ -87,6 +96,12 @@
         $('#login').on('click', function () {
             setTimeout(function () {
                 $('#login').prop("disabled", true);
+            }, 100);
+        })
+
+        $('#social').on('click', function () {
+            setTimeout(function () {
+                $('#social').prop("disabled", true);
             }, 100);
         })
     </script>

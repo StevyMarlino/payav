@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID','966207415408-tn4hhu9levli1k9t0qvqce2ceemt2tuq.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET','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'),
+        'redirect' => env('GOOGLE_REDIRECT_URL','https://next.payav.co/sign-in/google/redirect'),
+    ],
+
 ];
