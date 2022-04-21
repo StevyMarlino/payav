@@ -10,7 +10,7 @@ class PhoneValidController extends Controller
 {
     public function verify(Request $request)
     {
-        $phone = User::find(Auth::id)->firstOrFail();
+        $phone = User::find(Auth::user()->getAuthIdentifier())->firstOrFail();
 
         $phone->phone = $request['full_phone'];
 
