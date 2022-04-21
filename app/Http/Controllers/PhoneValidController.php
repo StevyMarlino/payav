@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PhoneValidController extends Controller
 {
     public function verify(Request $request)
     {
-        $phone = User::find(auth()->id)->firstOrFail();
+        $phone = User::find(Auth::id)->firstOrFail();
 
         $phone->phone = $request['full_phone'];
 
