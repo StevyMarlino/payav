@@ -22,6 +22,10 @@
                                         <span class="alert-close" data-close="alert" title="Close">&times;</span>
                                         <strong>Info</strong> - Check you phone and enter the 6 digits numbers receive.
                                     </div>
+                                    <div id="error" class="alert alert-red" style="display: none;">
+                                        <span class="alert-close" data-close="alert" title="Close">&times;</span>
+                                        <strong>Error</strong> - Please Enter the Valid code Received.
+                                    </div>
                                     <x-errors></x-errors>
                                     <form action="{{ route('phone-check') }}" method="post" x-show="showPanel">
                                         @csrf
@@ -48,10 +52,12 @@
                                         @csrf
                                         <label>Enter code</label>
                                         <div class="mb-3">
-                                            <input id="codes" type="text"
-                                                   class="form-control"
-                                                   maxlength="6"
-                                                   name="code" placeholder="Enter 6 Digits numbers ">
+                                            <label for="codes">
+
+                                            </label><input id="codes" type="text"
+                                                                              class="form-control"
+                                                                              maxlength="6"
+                                                                              name="code" placeholder="Enter 6 Digits numbers " />
                                         </div>
                                         <div class="">
                                             <button id="submit-code" type="submit"

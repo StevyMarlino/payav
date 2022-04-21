@@ -16,9 +16,9 @@ class PhoneNumberRequire
      */
     public function handle(Request $request, Closure $next)
     {
-        if(is_null(auth()->user()->phone)) {
+        if (is_null(auth()->user()->phone) || empty(auth()->user()->phone))
             return redirect()->route('phone-verify');
-        }
+
         return $next($request);
     }
 }

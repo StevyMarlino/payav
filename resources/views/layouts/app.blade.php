@@ -59,7 +59,8 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased" style="background-color: {{ request()->routeIs('phone-verify') ? '#ffffff' : '#f8f9fa' }} ;">
+<body class="font-sans antialiased"
+      style="background-color: {{ request()->routeIs('phone-verify') ? '#ffffff' : '#f8f9fa' }} ;">
 <x-jet-banner></x-jet-banner>
 
 <div class="">
@@ -73,7 +74,7 @@
                 {{ $header }}
             </div>
         </header>
-    @endif
+@endif
 
 <!-- Page Content -->
     <main>
@@ -140,6 +141,7 @@
     }
 
     function sendOTP() {
+
         const phoneNumber = $("#exist_phone").val();
         const appVerifier = window.recaptchaVerifier;
         firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
@@ -170,12 +172,28 @@
         firebase.auth().signInWithCredential(credential).then((result) => {
             console.log('number verify')
 
-            location.href = "{{ route('dashboard') }}"
+            $.ajax({
+                url: "{{ route('code-check') }}",
+                type: "post",
+                data: {full_phone: $("#exist_phone").val()},
+                success: function (response) {
+                    // You will get response from your PHP page (what you echo or print)
+                    location.href = "{{ route('dashboard') }}"
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+
         }).catch((error) => {
             // Error; SMS not sent
             // ...
 
-            console.log('SMS not sent')
+            $('#submit-code').prop("disabled", false);
+            $("#success").hide();
+            $("#error").show();
+
+            console.log('Wrong Code Provided ')
         });
 
     }

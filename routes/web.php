@@ -38,6 +38,7 @@ Route::middleware(['auth','verified'])->group(function () {
 
     Route::get('/phone-verify',\App\Http\Livewire\PhoneVerify::class)->name('phone-verify');
     Route::post('/phone-check',[\App\Http\Controllers\PhoneValidController::class,'verify'])->name('phone-check');
+    Route::post('/code-check',[\App\Http\Controllers\PhoneValidController::class,'codeVerify'])->name('code-check');
 
     Route::prefix('dashboard')
         ->middleware('phone')
