@@ -30,6 +30,7 @@ class PhoneValidController extends Controller
         $phone->phone = $request['full_phone'];
         $phone->save();
 
+        session()->forget(['google_phone_verify','phone_google']);
         return response()->json([
            'success' => true,
            'message' => 'phone verify'

@@ -19,6 +19,7 @@ class resetController extends Controller
 
        session()->put('verify','yes');
        session()->put('phone',$request['full_phone']);
+
        return redirect()->route('password.request');
     }
 
