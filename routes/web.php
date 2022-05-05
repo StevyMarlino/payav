@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\resetController;
-use App\Http\Livewire\Dashboard\DepositOrWithdraw;
 use App\Http\Livewire\Dashboard\Promotions;
 use App\Http\Livewire\Dashboard\Referrals;
 use App\Http\Livewire\Dashboard\Transactions;
 use App\Http\Livewire\Dashboard\Exchange;
+use App\Http\Livewire\Deposit;
+use App\Http\Livewire\Withdraw;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
 Route::post('/check', [resetController::class, 'check'])->name('check');
 Route::get('/password-reset/', [resetController::class, 'resetPass'])->name('reset.password');
@@ -46,7 +47,8 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::get('/transactions', Transactions::class)->name('transactions');
             Route::get('/referrals', Referrals::class)->name('referrals');
-            Route::get('/deposit-or-withdraw', DepositOrWithdraw::class)->name('depositOrWithdraw');
+            Route::get('/deposit', Deposit::class)->name('deposit');
+            Route::get('/withdraw', Withdraw::class)->name('withdraw');
             Route::get('/exchange', Exchange::class)->name('exchange');
             Route::get('/promotions', Promotions::class)->name('promotions');
     });

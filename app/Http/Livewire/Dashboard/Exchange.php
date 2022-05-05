@@ -8,8 +8,11 @@ class Exchange extends Component
 {
     public function render()
     {
+        $data = [
+            'currentPage' => 'Exchange'
+        ];
         return view('livewire.dashboard.exchange')
-            ->extends('layouts.dashboard')
+            ->extends('layouts.dashboard',$data)
             ->section('content');
     }
 }

@@ -182,6 +182,9 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
+                    $("#error").show().html(errorThrown);
+                    $("#success").hide();
+                    $('#submit-code').prop("disabled", false);
                 }
             });
 
