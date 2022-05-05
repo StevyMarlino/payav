@@ -10,10 +10,14 @@
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left"
                                      x-data="{ display: {{ (session('google_phone_verify'))? 'false' : 'true' }} }">
-                                    <h3 x-show="display" class="text-info text-gradient">Please Verify Your Phone
-                                        number</h3>
-                                    <h3 x-show="!display" class="text-info text-gradient">Enter Code verification
-                                        Receive by sms</h3>
+                                    @if(session('exist_phone'))
+                                        <h3 class="text-info text-gradient">{{ session('exist_phone') }}</h3>
+                                    @else
+                                        <h3 x-show="display" class="text-info text-gradient">Please Verify Your Phone
+                                            number</h3>
+                                        <h3 x-show="!display" class="text-info text-gradient">Enter Code verification
+                                            Receive by sms</h3>
+                                    @endif
                                 </div>
 
                                 <div class="card-body pb-3"

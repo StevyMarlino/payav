@@ -26,16 +26,22 @@ class PhoneValidController extends Controller
 
     public function codeVerify(Request $request)
     {
-        $phone = User::find(Auth::user()->getAuthIdentifier());
+        try {
+            $phone = User::find(Auth::user()->getAuthIdentifier());
 
-        $phone->phone = $request['full_phone'];
-        $phone->save();
+            $phone->phone = $request['full_phone'];
+            $phone->save();
 
-        session()->forget(['google_phone_verify','phone_google']);
-        return response()->json([
-            'success' => true,
-            'message' => 'phone verify'
-        ]);
+            session()->forget(['google_phone_verify', 'phone_google','exist_phone']);
+            return response()->json([
+                'success' => true,
+                'message' => 'phone verify'
+            ]);
+        } catch(\Exception $error) {
+
+            session()->forget(['google_phone_verify', 'phone_google']);
+            session()->put('exist_phone', 'Duplicate phone number choise another number');
+        }
 
     }
 }
