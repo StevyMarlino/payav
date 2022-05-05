@@ -16,48 +16,46 @@
                                     </div>
 
                                     <x-jet-validation-errors class="mb-4"/>
-                                    <form method="POST" action="{{ route('two-factor.login') }}">
+                                    <form id="authenticate-two-factor" method="POST"
+                                          action="{{ route('two-factor.login') }}">
                                         @csrf
 
-                                        <div x-data="{ code: ''}" x-init="{ code : $refs.code1.value }" x-show="! recovery" class="row gx-2 gx-sm-3">
-                                            <input type="hidden" class="form-control form-control-lg" name="code"
-                                                   x-model="code" x-ref="code"
-                                                   value="$refs.code1.value+$refs.code2.value+$refs.code3.value+$refs.code4.value+$refs.code5.value+$refs.code6.value"
-                                                   maxlength="6" autocomplete="off" autocapitalize="off"/>
+                                        <div x-show="! recovery" class="row gx-2 gx-sm-3">
+                                            <input id="code" class="block mt-1 w-full" type="hidden"
+                                                   inputmode="numeric" name="code" autofocus x-ref="code"
+                                                   autocomplete="one-time-code" />
+
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <input x-ref="code1" value="1" type="text" x-on:keyup="code1 = $refs.code1.value" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input x-ref="code2" type="text" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input x-ref="code3" type="text" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input x-ref="code4" type="text" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input x-ref="code5" type="text" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <input x-ref="code6" type="text" class="form-control text-center form-control-lg"
-                                                           maxlength="1" autocomplete="off" autocapitalize="off">
+                                                    <input id="code1" type="tel" size="1"  autofocus size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
+
+                                                    <input id="code2" type="tel" size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
+
+                                                    <input id="code3" type="tel" size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
+
+                                                    <input id="code4" type="tel" size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
+
+                                                    <input id="code5" type="tel" size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" my_code text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
+
+                                                    <input id="code6" type="tel" size="1" inputmode="numeric"
+                                                           pattern="[0-9]*"
+                                                           class=" my_code text-center form-control-lg"
+                                                           maxlength="1" autocomplete="off" >
                                                 </div>
                                             </div>
                                         </div>
@@ -70,7 +68,7 @@
                                         </div>
 
 
-                                        <div class="text-center">
+                                        <div class="ml-12 mr-4 pr-9 text-center">
                                             <x-jet-button class="btn bg-gradient-primary w-100 py-xxl-3">
                                                 {{ __('Log in') }}
                                             </x-jet-button>
@@ -97,7 +95,6 @@
                                         </div>
 
                                     </form>
-                                    <span x-text="code">
                                 </div>
                             </div>
                         </div>
@@ -105,7 +102,7 @@
                             <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
                                 <div
                                     class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                                    style="background-image:url('./assets/img/curved9.jpg')"></div>
+                                    style="background-image:url('{{ asset('assets/img/curved9.jpg') }}')"></div>
                             </div>
                         </div>
                     </div>
@@ -113,4 +110,42 @@
             </div>
         </section>
     </main>
+    @section('js')
+        <script>
+
+            $("input").keyup(function () {
+                if (this.value.length === this.maxLength)
+                    $(this).next('input').focus();
+            });
+
+                let names = '';
+
+                $('#code1').on('change',function() {
+                    names += $(this).val();
+                })
+                $('#code2').on('change',function() {
+                    names += $(this).val();
+                })
+                $('#code3').on('change',function() {
+                    names += $(this).val();
+                })
+                $('#code4').on('change',function() {
+                    names += $(this).val();
+                })
+                $('#code5').on('change',function() {
+                    names += $(this).val();
+                })
+                $('#code6').on('change',function() {
+                    names += $(this).val();
+
+                    let code = $('#code').val(names);
+
+                    console.log(code)
+                })
+
+
+
+
+        </script>
+    @endsection
 </x-guest-layout>

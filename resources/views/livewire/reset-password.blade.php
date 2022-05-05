@@ -19,6 +19,10 @@
                                         <span class="alert-close" data-close="alert" title="Close">&times;</span>
                                         <strong>Info</strong> - Check you phone and enter the 6 digits numbers receive.
                                     </div>
+                                    <div id="error" class="alert alert-red" style="display: none;">
+                                        <span class="alert-close" data-close="alert" title="Close">&times;</span>
+                                        <strong>Error</strong> - Please Enter the Valid code Received.
+                                    </div>
                                     <x-errors></x-errors>
                                     <form action="{{ route('check') }}" method="post" x-show="showPanel">
                                         @csrf

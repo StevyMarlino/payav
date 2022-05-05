@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PhoneValidController extends Controller
 {
+
     public function verify(Request $request)
     {
-        $phone = User::find(Auth::user()->getAuthIdentifier())->firstOrFail();
+        $phone = User::find(Auth::user()->getAuthIdentifier());
 
         if (!isset($phone->exists) && is_null($phone)) {
             return redirect()->back()->withErrors('User with the phone number not found ');
@@ -25,15 +26,15 @@ class PhoneValidController extends Controller
 
     public function codeVerify(Request $request)
     {
-        $phone = User::find(Auth::user()->getAuthIdentifier())->firstOrFail();
+        $phone = User::find(Auth::user()->getAuthIdentifier());
 
         $phone->phone = $request['full_phone'];
         $phone->save();
 
         session()->forget(['google_phone_verify','phone_google']);
         return response()->json([
-           'success' => true,
-           'message' => 'phone verify'
+            'success' => true,
+            'message' => 'phone verify'
         ]);
 
     }

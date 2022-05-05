@@ -237,7 +237,11 @@
         }).catch((error) => {
             // Error; SMS not sent
             // ...
+            $('#submit-code').prop("disabled", false);
+            $("#success").hide();
+            $("#error").show();
 
+            console.log('Wrong Code Provided ')
             console.log('SMS not sent')
         });
 
