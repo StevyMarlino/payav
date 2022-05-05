@@ -10,6 +10,9 @@ class TableTransaction extends Component
 {
     public function render()
     {
+        $data = [
+            'currentPage' => 'Transactions'
+        ];
         return view('livewire.dashboard.table-transaction',[
             'transactions' => Auth::user()->transactions
         ]);

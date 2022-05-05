@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse  w-auto  h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('dashboard') || request()->routeIs('depositOrWithdraw') || request()->routeIs('exchange') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                <a class="nav-link {{ request()->routeIs('dashboard') || request()->routeIs('deposit') || request()->routeIs('exchange') || request()->routeIs('withdraw')? 'active' : '' }}" href="{{ route('dashboard') }}">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fa fa-home text-black-50" style="font-size: 16px;"></i>

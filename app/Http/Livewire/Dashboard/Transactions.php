@@ -9,6 +9,9 @@ class Transactions extends Component
 {
     public function render()
     {
+        $data = [
+            'currentPage' => 'Transactions'
+        ];
         return view('livewire.dashboard.transactions', [
             'withDraw' => Transaction::countWithdraw(),
             'deposit' => Transaction::countDeposit(),
@@ -20,7 +23,7 @@ class Transactions extends Component
             'myExchangeTransaction' => Transaction::myExchangeTransaction()
 
         ])
-            ->extends('layouts.dashboard')
+            ->extends('layouts.dashboard',$data)
             ->section('content');
     }
 }

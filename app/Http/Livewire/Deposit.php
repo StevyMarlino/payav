@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard;
+namespace App\Http\Livewire;
 
 use Livewire\Component;
 
-class Promotions extends Component
+class Deposit extends Component
 {
     public function render()
     {
         $data = [
-            'currentPage' => 'Promotion'
+            'currentPage' => 'Deposit'
         ];
-        return view('livewire.dashboard.promotions')
+        return view('livewire.deposit')
             ->extends('layouts.dashboard',$data)
             ->section('content');
     }

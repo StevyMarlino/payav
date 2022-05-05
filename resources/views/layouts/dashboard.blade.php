@@ -23,6 +23,7 @@
     <!-- CSS Files -->
     <link href="{{ asset('assets/css/chartist.min.css') }}" rel="stylesheet"/>
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css') }}" rel="stylesheet"/>
+    <link id="pagestyle" href="{{ asset('assets/css/wizard.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.min.css') }}">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -52,7 +53,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
-                        Home {{ request()->routeIs('depositOrWithdraw') ? '/ Deposit or Withdraw' : '' }}</li>
+                       <a href="{{ route('dashboard') }}" > Home </a>  {{ isset($currentPage) ? '/ '. $currentPage : '' }}</li>
                 </ol>
                 <h6 class="font-weight-bolder mb-0"></h6>
             </nav>
@@ -255,6 +256,6 @@
             });
         });
     </script>
-
+    <script src="{{ asset('assets/js/wizard.js') }}"></script>
 </main>
 </body>
