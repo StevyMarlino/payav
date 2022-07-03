@@ -51,5 +51,6 @@ Route::middleware(['auth','verified'])->group(function () {
             Route::get('/withdraw', Withdraw::class)->name('withdraw');
             Route::get('/exchange', Exchange::class)->name('exchange');
             Route::get('/promotions', Promotions::class)->name('promotions');
+            Route::post('make-deposit',[\App\Http\Controllers\DepositController::class,'deposit'])->name('makeDeposit');
     });
 });

@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/payment/validate-payment', [\App\Http\Controllers\PaymentController::class,'validate_payment']);
+Route::post('/payment/check-status/{track}', [\App\Http\Controllers\PaymentController::class,'getPaymentStatus'])->name('payment.check');
+
+Route::post('/payment/make', [\App\Http\Controllers\PaymentController::class,'collect']);
+Route::post('/payment/callback', [\App\Http\Controllers\PaymentCallbackController::class,'index']);

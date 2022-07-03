@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('transaction_id');
-            $table->string('account_id');
+            $table->string('account_id')->nullable();
             $table->integer('amount');
             $table->enum('type', ['EXCHANGE', 'DEPOSIT','WITHDRAW']);
             $table->enum('wallet', ['MOMO', 'OM']);
@@ -29,6 +29,11 @@ return new class extends Migration {
                 ->onDelete('NO ACTION')
                 ->cascadeOnUpdate();
             $table->timestamps();
+
+            $table->string('code_transaction');
+            $table->string('payment_methode');
+            $table->string('currency');
+            $table->string('identity');
         });
     }
 

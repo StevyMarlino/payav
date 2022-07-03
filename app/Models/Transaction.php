@@ -15,8 +15,25 @@ class Transaction extends Model
         'type',
         'amount',
         'status',
-        'user_id'
+        'user_id',
+        'code_transaction',
+        'payment_methode',
+        'identity',
+        'currency'
     ];
+
+    public static function cancel($code)
+    {
+        $trans= Transaction::whereCodeTransaction($code)->first();
+        $trans->status = 0;
+        $trans->save();
+    }
+    public static function complete($code)
+    {
+        $trans= Transaction::whereCodeTransaction($code)->first();
+        $trans->status= 1;
+        $trans->save();
+    }
 
 
     public function user()

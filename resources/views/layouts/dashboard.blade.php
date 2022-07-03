@@ -29,6 +29,7 @@
 
 
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @livewireStyles
 
@@ -53,7 +54,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
-                       <a href="{{ route('dashboard') }}" > Home </a>  {{ isset($currentPage) ? '/ '. $currentPage : '' }}</li>
+                        <a href="{{ route('dashboard') }}">
+                            Home </a> {{ isset($currentPage) ? '/ '. $currentPage : '' }}</li>
                 </ol>
                 <h6 class="font-weight-bolder mb-0"></h6>
             </nav>
@@ -216,7 +218,8 @@
                     }
                 });
             });
-        });$(document).ready(function () {
+        });
+        $(document).ready(function () {
             $('#myTable2').DataTable();
             $(document).ready(function () {
                 var table = $('#example').DataTable({
@@ -257,5 +260,91 @@
         });
     </script>
     <script src="{{ asset('assets/js/wizard.js') }}"></script>
+    <script>
+        // Variable to hold request
+        var request;
+
+        $('#deposit').submit(function (e) {
+            e.preventDefault();
+
+            // Abort any pending request
+            if (request) {
+                request.abort();
+            }
+
+            // setup some local variables
+            var $form = $(this);
+
+            // Let's select and cache all the fields
+            var $inputs = $form.find("input, select, button");
+
+            // Serialize the data in the form
+            var serializedData = $form.serialize();
+
+            // Let's disable the inputs for the duration of the Ajax request.
+            $inputs.prop("disabled", true);
+
+            // Fire off the request to /form.php
+            request = $.ajax({
+                url: "{{ route('makeDeposit') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                data: serializedData
+            });
+
+            // Callback handler that will be called on success
+            request.done(function (response, textStatus, jqXHR) {
+                // Log a message to the console
+                console.log(response.length)
+
+                if (response.length !== 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response,
+                    })
+                    return false;
+                }
+
+                Swal.fire(
+                    'Thank you!',
+                    'You Account Has been Credited',
+                    'success'
+                )
+
+
+            });
+
+            // Callback handler that will be called on failure
+            request.fail(function (jqXHR, textStatus, errorThrown) {
+                // Log the error to the console
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorThrown,
+                })
+                console.error(
+                    "The following error occurred: " +
+                    textStatus, errorThrown
+                );
+            });
+
+            // Callback handler that will be called regardless
+            // if the request failed or succeeded
+            request.always(function (response) {
+                // Reenable the inputs
+
+                console.log(response);
+                $inputs.prop("disabled", false);
+            });
+
+            function isEmpty(str) {
+                return (!str || str.length === 0);
+            }
+        })
+    </script>
 </main>
 </body>
