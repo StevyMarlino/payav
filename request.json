@@ -1,0 +1,58 @@
+
+    {
+        "type":"mobile_money_franco (for xaf and xof),mobile_money_ghana,mpesa,mobile_money_rwanda,mobile_money_uganda,mobile_money_zambia,ach_payment,debit_ng_account,paypal,debit_uk_account,ussd,card,bank_transfer (oblicatoir)",
+        "currency":"country currency (oblicatoire)",
+        "amount":"local currency (oblicatoire)",
+        "identifier":"phone number (obligatoire)",
+        "order_id":"order id (obligatoire)",
+        "network":"network (obligatoire for ghana,uganda,zambia)",
+        "user":{
+            "id":"client id on hostbill (obligatoire)",
+            "first_name":"user first name (obligatoire)",
+            "last_name":"user last name (obligatoire)",
+            "email":"user email (obligatoire)",
+            "country":"user country code (obligatoire)",
+            "adrress":"user adrress (optional)",
+            "city":"user city(optional)",
+            "zip":"user zip(optional)",
+            "state":"user state(optional)"
+        },
+        "cardInfo":[
+            {
+                "cardno":"",
+                "cvv":"",
+                "expirymonth":"",
+                "expiryyear":""
+            },
+            {
+                "accountnumber":"",
+                "bvn":" account bank"
+            }
+        ]
+    }
+
+// pour cardInfo il faut choisir soit la card ou la bank
+
+// exemple
+
+/*
+{
+    "type":"mobile_money_franco",
+    "currency":"XAF",
+    "amount":"100",
+    "identifier":"675300721",
+    "order_id":"120",
+    "network":"",
+    "user":{
+        "id":"2",
+        "first_name":"paki",
+        "last_name":"leonel",
+        "email":"pakileonel1@gmail.com",
+        "adrress":"",
+        "country":"cm",
+        "city":"",
+        "zip":"",
+        "state":""
+    },
+    "cardInfo":[]
+} */

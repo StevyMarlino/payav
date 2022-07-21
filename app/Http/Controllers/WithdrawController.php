@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DepositController extends Controller
+class WithdrawController extends Controller
 {
-    public function deposit(Request $request)
+    public function withdraw(Request $request)
     {
         $myAppId = config('deriv.app_id');
 
         $token = config('deriv.token');
 
         \Ratchet\Client\connect('wss://ws.binaryws.com/websockets/v3?app_id=' . $myAppId)->then(function ($conn) use ($request, $token) {
-             $conn->on('message', function ($msg) use ($request, $conn, $token) {
+            $conn->on('message', function ($msg) use ($request, $conn, $token) {
                 // echo $msg."\n"; Uncomment this to see full JSON return message.
                 $msgPHP = json_decode($msg, 1);
                 if (isset($msgPHP["error"])) {

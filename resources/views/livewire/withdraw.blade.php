@@ -14,17 +14,17 @@
                             <label for="" class="form-label mt-3">Select Broker</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-university"></i></span>
-                                <select class="form-select" id="inputGroupSelect01">
+                                <select name="broker" class="form-select" id="inputGroupSelect01">
                                     <option selected>Select broker</option>
-                                    <option value="1">Just Forex</option>
-                                    <option value="2">Deriv</option>
+                                    <option value="forex">Just Forex</option>
+                                    <option value="deriv">Deriv</option>
                                 </select>
                             </div>
 
                             <label for="" class="form-label">Trading email</label>
                             <div class="input-group mb-3 w-100">
                                 <span class="input-group-text" id="basic-addon1">@</span>
-                                <input type="email" class="form-control" placeholder="Enter email">
+                                <input type="email" name="email" class="form-control" placeholder="Enter email">
                             </div>
                             <small id="emailHelpId" class="form-text text-muted" style="font-size:10pt;">Please make sure its the email used on your broker's platform</small>
                         </div>
@@ -80,3 +80,4 @@
     </div>
 
 </div>
+

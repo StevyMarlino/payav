@@ -37,28 +37,34 @@
                                         <div class="mt-3">
                                             <label for="" class="form-label">Enter your account ID</label>
                                             <input type="text" class="form-control" name="account_id"
-                                                   aria-label="Text input with dropdown button" placeholder="Account ID">
+                                                   aria-label="Text input with dropdown button"
+                                                   placeholder="Account ID">
                                         </div>
                                     </div>
                                     <hr class="mb-3">
                                     <h6>Deposit info</h6>
                                     <div class="mb-3 row">
                                         <div class="col-md-4">
-                                            <select name="currency" class="form-select" aria-label="Default select example">
+                                            <select name="currency" class="form-select"
+                                                    aria-label="Default select example">
                                                 <option selected>Currency</option>
                                                 <option value="USD">Dollar</option>
                                                 <option value="POUND">Pound</option>
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <input name="amount" type="text" class="form-control"
+                                            <input id="amount" value="0" name="amount" type="number" class="form-control"
                                                    aria-label="Text input with dropdown button"
                                                    placeholder="Amount to deposit">
                                             <p class="mt-0 float-end text-primary" style="font-size:10pt;">Equivalent to
-                                                <span class="fw-bold">6200 FCFA</span></p>
+                                                <span id="equal" class="fw-bold"> FCFA</span></p>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary w-100">Proceed</button>
+                                    {{--                                    <button type="submit" class="btn btn-primary w-100">Proceed</button>--}}
+                                    <button id="process" type="button" class="btn btn-primary  w-100" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop">
+                                        Proceed
+                                    </button>
                                 </div>
                             </form>
                             <!-- deposit form -->
@@ -70,3 +76,178 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Pay by Mobile Money</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row">
+                    <div class="col-md-4">
+                        <select name="currency" class="form-select" aria-label="Default select example">
+                            <option selected disabled>Pays</option>
+                            <option value="XAF">Cameroon</option>
+                            <option value="RWF">Rwanda</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input name="text" type="text" class="form-control"
+                               aria-label="Text input with dropdown button"
+                               placeholder="your phone number">
+                        <p class="mt-0 float-end text-primary" style="font-size:10pt;">Equivalent to
+                            <span id="equivalent" class="fw-bold"> </span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="payNow" type="button" class="btn btn-primary">Pay Now <span id="total_amount"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section('js')
+    <script>
+
+        let process = $('#process').prop("disabled", true);
+
+        $('#total_amount').text(0)
+        $('#equivalent').text(0 + ' FCFA')
+        $('#equal').text(0 + ' FCFA')
+
+        $('select').change(function () {
+            if ($(this).val() === 'USD') {
+
+                $('input[name="amount"]').on('change', function () {
+                    process.prop("disabled", false);
+                    let rate = 654.23;
+                    let result;
+                    if ($(this).val() <= 0 || $(this).val == null) {
+                        $(this).val(0);
+                        process.prop("disabled", true);
+                    }
+
+                    if ($(this).val() > 0) {
+                        result = $(this).val() * rate;
+                        $('#total_amount').text(result)
+                        $('#equivalent').text(result + ' FCFA')
+                        $('#equal').text(result + ' FCFA')
+                    }
+                })
+            }
+        })
+
+
+        $('#cancel').on('click', function () {
+            $('#total_amount').text(0)
+            $('#amount').val(0)
+            $('#equivalent').text(0 + ' FCFA')
+            $('#equal').text(0 + ' FCFA')
+        })
+
+
+        $('#payNow').on('click', function () {
+
+            let total_amount = $('#total_amount').text()
+
+            console.log(total_amount)
+
+        });
+
+        // Variable to hold request
+        var request;
+
+        $('#deposit').submit(function (e) {
+            e.preventDefault();
+
+            // Abort any pending request
+            if (request) {
+                request.abort();
+            }
+
+            // setup some local variables
+            var $form = $(this);
+
+            // Let's select and cache all the fields
+            var $inputs = $form.find("input, select, button");
+
+            // Serialize the data in the form
+            var serializedData = $form.serialize();
+
+            // Let's disable the inputs for the duration of the Ajax request.
+            $inputs.prop("disabled", true);
+
+            // Fire off the request to /form.php
+            request = $.ajax({
+                url: "{{ route('makeDeposit') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                data: serializedData
+            });
+
+            // Callback handler that will be called on success
+            request.done(function (response, textStatus, jqXHR) {
+                // Log a message to the console
+                console.log(response.length)
+                console.log(typeof (response))
+                console.log(JSON.stringify(response.message))
+
+                if (response.length !== 0 && response !== '1') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response,
+                    })
+                    return false;
+                }
+
+                if (response === 1 || response === '1') {
+                    Swal.fire(
+                        'Thank you!',
+                        'You Account Has been Credited',
+                        'success'
+                    )
+                    return false;
+                }
+
+            });
+
+            // Callback handler that will be called on failure
+            request.fail(function (jqXHR, textStatus, errorThrown) {
+                // Log the error to the console
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorThrown,
+                })
+                console.error(
+                    "The following error occurred: " +
+                    textStatus, errorThrown
+                );
+            });
+
+            // Callback handler that will be called regardless
+            // if the request failed or succeeded
+            request.always(function (response) {
+                // Reenable the inputs
+
+                console.log(response);
+                $inputs.prop("disabled", false);
+            });
+
+            function isEmpty(str) {
+                return (!str || str.length === 0);
+            }
+        })
+    </script>
+@endsection
