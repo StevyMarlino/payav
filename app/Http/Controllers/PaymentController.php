@@ -51,7 +51,7 @@ class PaymentController extends Controller
         $txref = $this->txref();
 
         $data = $this->get_collection_payment_data($identifier, (float)$amount, $txref, $transaction_id, $payload);
-        if (false === $data) return response()->json(['status' => "fail", "message" => "an unexpected error"], 500);
+        if (false === $data) return response()->json(['status' => "fail", "message" => "an unexpected error"], 200);
         $client = new Client();
         try {
             $response = $client->request('POST', "https://api.flutterwave.com/v3/charges?type=" . $this->type, [
@@ -64,14 +64,14 @@ class PaymentController extends Controller
             $result = json_decode($body = (string)$response->getBody());
         } catch (\GuzzleHttp\Exception\BadResponseException $err) {
             Log::error('The response received for collect with flutterwave is not valid. response body: ' . (string)$err->getResponse()->getBody());
-            return response()->json(['status' => "fail", "message" => "an unexpected error"], 500);
+            return response()->json(json_decode((string)$err->getResponse()->getBody()), 200);
         } catch (\Exception $err) {
             Log::error('The response received for collect with flutterwave is not valid. err: ' . $err->getMessage());
-            return response()->json(['status' => "fail", "message" => "an unexpected error"], 500);
+            return response()->json(['status' => "fail", "message" => $err->getMessage()], 200);
         }
         if (!$this->is_valid_collection_response($result)) {
             Log::error('The response received for collect with flutterwave is not valid. response body: ' . $body);
-            return response()->json(['status' => "fail", "message" => "in valide response"], 500);
+            return response()->json(['status' => "fail", "message" => $body], 500);
         }
         $other_response_args = [];
         $autorization_mode = $result->meta->authorization->mode ?? null;

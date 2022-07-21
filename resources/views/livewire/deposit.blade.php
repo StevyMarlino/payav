@@ -53,7 +53,8 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <input id="amount" value="0" name="amount" type="number" class="form-control"
+                                            <input id="amount" value="0" name="amount" type="number"
+                                                   class="form-control"
                                                    aria-label="Text input with dropdown button"
                                                    placeholder="Amount to deposit">
                                             <p class="mt-0 float-end text-primary" style="font-size:10pt;">Equivalent to
@@ -61,7 +62,8 @@
                                         </div>
                                     </div>
                                     {{--                                    <button type="submit" class="btn btn-primary w-100">Proceed</button>--}}
-                                    <button id="process" type="button" class="btn btn-primary  w-100" data-bs-toggle="modal"
+                                    <button id="process" type="button" class="btn btn-primary  w-100"
+                                            data-bs-toggle="modal"
                                             data-bs-target="#staticBackdrop">
                                         Proceed
                                     </button>
@@ -89,14 +91,14 @@
             <div class="modal-body">
                 <div class="mb-3 row">
                     <div class="col-md-4">
-                        <select name="currency" class="form-select" aria-label="Default select example">
+                        <select id="currency" name="currency" class="form-select" aria-label="Default select example">
                             <option selected disabled>Pays</option>
                             <option value="XAF">Cameroon</option>
                             <option value="RWF">Rwanda</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input name="text" type="text" class="form-control"
+                        <input id="phone" name="phone" type="number" class="form-control"
                                aria-label="Text input with dropdown button"
                                placeholder="your phone number">
                         <p class="mt-0 float-end text-primary" style="font-size:10pt;">Equivalent to
@@ -118,7 +120,6 @@
 
         let process = $('#process').prop("disabled", true);
 
-        $('#total_amount').text(0)
         $('#equivalent').text(0 + ' FCFA')
         $('#equal').text(0 + ' FCFA')
 
@@ -136,7 +137,6 @@
 
                     if ($(this).val() > 0) {
                         result = $(this).val() * rate;
-                        $('#total_amount').text(result)
                         $('#equivalent').text(result + ' FCFA')
                         $('#equal').text(result + ' FCFA')
                     }
@@ -146,19 +146,80 @@
 
 
         $('#cancel').on('click', function () {
-            $('#total_amount').text(0)
             $('#amount').val(0)
             $('#equivalent').text(0 + ' FCFA')
             $('#equal').text(0 + ' FCFA')
+            $('#payNow').prop("disabled", true)
         })
 
 
         $('#payNow').on('click', function () {
+            let pay = $('#payNow').prop("disabled", true);
 
-            let total_amount = $('#total_amount').text()
+            let data = {
+                "type": "mobile_money_franco",
+                "currency": $('#currency').val(),
+                "amount": parseInt($('#equivalent').text()),
+                "phone": parseInt($('#phone').val()),
+                "order_id": "12112",
+                "network": "",
+                "user": {
+                    "id": "{{ auth()->id() }}",
+                    "first_name": "{{ auth()->user()->name }}",
+                    "last_name": "{{ auth()->user()->name }}",
+                    "email": "{{ auth()->user()->email }}",
+                },
+                "cardInfo": [{
+                    "cardno": "",
+                    "cvv": "",
+                    "expirymonth": "",
+                    "expiryyear": ""
+                },
+                    {
+                        "accountnumber": "",
+                        "bvn": " account bank"
+                    }]
+            }
 
-            console.log(total_amount)
+            console.log(data);
 
+            let countryCode = $.get('https://ipinfo.io', function () {
+            }, "jsonp").always(function (resp) {
+                var countryCode = (resp && resp.country) ? resp.country : "cm";
+                console.log(countryCode)
+            });
+
+
+            console.log(countryCode)
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/payment/make",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+                data: data,
+                success: function (response) {
+                    if (response.status === 'error') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response.message,
+                        })
+                        pay.prop('disabled', false)
+                    }
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Description',
+                            text: 'Check your phone to confirme the transaction',
+                        })
+                        pay.prop('disabled', false)
+                    }
+                },
+                error: function (response) {
+                    console.log(response.status)
+                }
+            });
         });
 
         // Variable to hold request

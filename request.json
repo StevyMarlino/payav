@@ -15,7 +15,7 @@
             "adrress":"user adrress (optional)",
             "city":"user city(optional)",
             "zip":"user zip(optional)",
-            "state":"user state(optional)"
+            "state":"user state(otional)"
         },
         "cardInfo":[
             {
