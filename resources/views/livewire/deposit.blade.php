@@ -45,7 +45,7 @@
                                     <h6>Deposit info</h6>
                                     <div class="mb-3 row">
                                         <div class="col-md-4">
-                                            <select name="currency" class="form-select"
+                                            <select id="currencies" name="currency" class="form-select"
                                                     aria-label="Default select example">
                                                 <option selected>Currency</option>
                                                 <option value="USD">Dollar</option>
@@ -109,6 +109,10 @@
             <div class="modal-footer">
                 <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button id="payNow" type="button" class="btn btn-primary">Pay Now <span id="total_amount"></span>
+                    <button id="spin" class="btn btn-primary" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                 </button>
             </div>
         </div>
@@ -119,11 +123,13 @@
     <script>
 
         let process = $('#process').prop("disabled", true);
+        var spin = $('#spin').hide();
+        var pay = $('#payNow').prop("disabled", true);
 
         $('#equivalent').text(0 + ' FCFA')
         $('#equal').text(0 + ' FCFA')
 
-        $('select').change(function () {
+        $('#currencies').change(function () {
             if ($(this).val() === 'USD') {
 
                 $('input[name="amount"]').on('change', function () {
@@ -144,7 +150,6 @@
             }
         })
 
-
         $('#cancel').on('click', function () {
             $('#amount').val(0)
             $('#equivalent').text(0 + ' FCFA')
@@ -152,9 +157,20 @@
             $('#payNow').prop("disabled", true)
         })
 
+        $('#currency').change(function() {
+            $('input[name="phone"]').change(function(){
+                pay.prop("disabled", false);
+                if ($(this).val() <= 0 || $(this).val == null) {
+                    pay.prop("disabled", true);
+                }
+            })
+        })
 
-        $('#payNow').on('click', function () {
+        pay.on('click', function () {
             let pay = $('#payNow').prop("disabled", true);
+            pay.hide();
+            spin.show();
+
 
             let data = {
                 "type": "mobile_money_franco",
@@ -202,6 +218,8 @@
                             text: response.message,
                         })
                         pay.prop('disabled', false)
+                        pay.show();
+                        spin.hide();
                     }
                     if (response.status === 'fail') {
                         Swal.fire({
@@ -210,6 +228,8 @@
                             text: response.message,
                         })
                         pay.prop('disabled', false)
+                        pay.show();
+                        spin.hide();
                     }
                     if (response.status === 'success') {
                         Swal.fire({
@@ -231,89 +251,6 @@
 
         // Variable to hold request
         var request;
-
-        $('#deposit').submit(function (e) {
-            e.preventDefault();
-
-            // Abort any pending request
-            if (request) {
-                request.abort();
-            }
-
-            // setup some local variables
-            var $form = $(this);
-
-            // Let's select and cache all the fields
-            var $inputs = $form.find("input, select, button");
-
-            // Serialize the data in the form
-            var serializedData = $form.serialize();
-
-            // Let's disable the inputs for the duration of the Ajax request.
-            $inputs.prop("disabled", true);
-
-            // Fire off the request
-            request = $.ajax({
-                url: "{{ route('makeDeposit') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "post",
-                data: serializedData
-            });
-
-            // Callback handler that will be called on success
-            request.done(function (response, textStatus, jqXHR) {
-                // Log a message to the console
-                console.log(response.length)
-                console.log(typeof (response))
-                console.log(JSON.stringify(response.message))
-
-                if (response.length !== 0 && response !== '1') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: response,
-                    })
-                    return false;
-                }
-
-                if (response === 1 || response === '1') {
-                    Swal.fire(
-                        'Thank you!',
-                        'You Account Has been Credited',
-                        'success'
-                    )
-                    return false;
-                }
-
-            });
-
-            // Callback handler that will be called on failure
-            request.fail(function (jqXHR, textStatus, errorThrown) {
-                // Log the error to the console
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: errorThrown,
-                })
-                console.error(
-                    "The following error occurred: " +
-                    textStatus, errorThrown
-                );
-            });
-
-            // Callback handler that will be called regardless
-            // if the request failed or succeeded
-            request.always(function (response) {
-                // Reenable the inputs
-
-                console.log(response);
-                $inputs.prop("disabled", false);
-            });
-
-        })
 
         function isEmpty(str) {
             return (!str || str.length === 0);
