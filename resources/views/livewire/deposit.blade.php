@@ -181,16 +181,12 @@
                     }]
             }
 
-            console.log(data);
-
             let countryCode = $.get('https://ipinfo.io', function () {
             }, "jsonp").always(function (resp) {
                 var countryCode = (resp && resp.country) ? resp.country : "cm";
-                console.log(countryCode)
             });
 
 
-            console.log(countryCode)
             $.ajax({
                 url: "http://127.0.0.1:8000/api/payment/make",
                 headers: {
@@ -207,6 +203,14 @@
                         })
                         pay.prop('disabled', false)
                     }
+                    if (response.status === 'fail') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response.message,
+                        })
+                        pay.prop('disabled', false)
+                    }
                     if (response.status === 'success') {
                         Swal.fire({
                             icon: 'info',
@@ -214,6 +218,9 @@
                             text: 'Check your phone to confirme the transaction',
                         })
                         pay.prop('disabled', false)
+
+                        checkPayment(response.track);
+
                     }
                 },
                 error: function (response) {
@@ -245,7 +252,7 @@
             // Let's disable the inputs for the duration of the Ajax request.
             $inputs.prop("disabled", true);
 
-            // Fire off the request to /form.php
+            // Fire off the request
             request = $.ajax({
                 url: "{{ route('makeDeposit') }}",
                 headers: {
@@ -306,9 +313,126 @@
                 $inputs.prop("disabled", false);
             });
 
-            function isEmpty(str) {
-                return (!str || str.length === 0);
-            }
         })
+
+        function isEmpty(str) {
+            return (!str || str.length === 0);
+        }
+
+        function checkPayment(order_id) {
+            // Fire off the request to /form.php
+
+            let request;
+
+            request = $.ajax({
+                url: "http://127.0.0.1:8000/api/payment/check-status/" + order_id,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "post",
+            });
+
+            request.done(function (response) {
+
+                if (response.status === 'pending') {
+
+                    setTimeout(function () {
+                        checkPayment(order_id);
+                    }, 10000);
+                }
+
+                if (response.status === 'fail') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Transaction failed or Aborted',
+                    })
+                }
+
+                if (response.status === 'success') {
+
+                    var $form = $('#deposit');
+
+                    var $inputs = $form.find("input, select, button");
+
+                    var serializedData = $form.serialize();
+
+                    $inputs.prop("disabled", true);
+
+                    if (request) {
+                        request.abort();
+                    }
+
+                    // Fire off the request to /form.php
+                    request = $.ajax({
+                        url: "{{ route('makeDeposit') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        type: "post",
+                        data: serializedData
+                    });
+
+                    // Callback handler that will be called on success
+                    request.done(function (response, textStatus, jqXHR) {
+                        // Log a message to the console
+
+                        console.log(JSON.stringify(response.message))
+
+                        if (response.length !== 0 && response !== '1') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: response,
+                            })
+                            return false;
+                        }
+
+                        if (response === 1 || response === '1') {
+                            Swal.fire(
+                                'Thank you!',
+                                'You Account Has been Credited',
+                                'success'
+                            )
+                            return false;
+                        }
+
+                    });
+
+                    // Callback handler that will be called on failure
+                    request.fail(function (jqXHR, textStatus, errorThrown) {
+                        // Log the error to the console
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: errorThrown,
+                        })
+                        console.error(
+                            "The following error occurred: " +
+                            textStatus, errorThrown
+                        );
+                    });
+
+                    // Callback handler that will be called regardless
+                    // if the request failed or succeeded
+                    request.always(function (response) {
+                        // Reenable the inputs
+
+                        console.log(response);
+                        $inputs.prop("disabled", false);
+                    });
+
+                }
+            })
+
+            request.fail(function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something is wrong check your network',
+                })
+            })
+        }
     </script>
 @endsection

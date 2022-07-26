@@ -14,14 +14,12 @@ class PaymentCallbackController extends Controller
     private $public_key;
     private $private_key;
     private $crypt_key;
-    private $country;
 
     public function __construct()
     {
-        $country=request()->segment(4);
-        $this->public_key = config("flutterwave.{$country}.api_key");
-        $this->private_key = config("flutterwave.{$country}.api_secret");
-        $this->crypt_key = config("flutterwave.{$country}.api_crypte");
+        $this->public_key = config("flutterwave.api_key");
+        $this->private_key = config("flutterwave.api_secret");
+        $this->crypt_key = config("flutterwave.api_crypte");
     }
 
     private function log(string $message)
@@ -35,9 +33,8 @@ class PaymentCallbackController extends Controller
         exit($message);
     }
 
-    public function index($country)
+    public function index()
     {
-        $this->country=$country;
         $this->log("========start========");
         Log::info("flutterwave callback");
         $body = @file_get_contents("php://input");

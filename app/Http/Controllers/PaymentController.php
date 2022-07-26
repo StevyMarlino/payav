@@ -93,6 +93,7 @@ class PaymentController extends Controller
 
         $other_response_args['status'] = "success";
         $other_response_args['check_url'] = route('payment.check', ['track' => $txref]);
+        $other_response_args['track'] =  $txref;
         $other_response_args['message'] = "Paiement initiate ,veuillez confirmer votre paiement";
 
         return response()->json($other_response_args, 202);
@@ -129,16 +130,13 @@ class PaymentController extends Controller
         $data = Transaction::whereCodeTransaction($track)->first();
         if (empty($data)) {
             Log::error("transaction with reference [$track] was not found");
-            return response()->json(['status' => "fail", "message" => "Transaction not found"], 500);
+            return response()->json(['status' => "fail", "message" => "Transaction not found"], 404);
         }
         if (!$data->status) {
-            return response()->json(['status' => "fail", "message" => "Payment fail"], 500);
+            return response()->json(['status' => "pending", "message" => "Payment pending"], 200);
         }
         if ($data->status) {
             return response()->json(['status' => "success", "message" => "Payment Success"], 200);
-        }
-        if ($data->status == "Pending") {
-            return response()->json(['status' => "pending", "message" => "check again"], 200);
         }
     }
 }
